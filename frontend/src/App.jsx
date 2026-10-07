@@ -16,6 +16,9 @@ export default function App() {
           <Route path="/history" element={<HistoryPage />} />
         </Routes>
       </main>
+      <footer className="app-footer">
+        HireGuard · Stylometric fraud detection for Kenyan job postings · Strathmore University
+      </footer>
     </BrowserRouter>
   );
 }

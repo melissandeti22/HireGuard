@@ -1,13 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { ShieldIcon } from "./Icons";
 
 export default function Navbar() {
   return (
-    <nav className="navbar">
-      <Link to="/" className="navbar-brand">HireGuard</Link>
-      <div className="navbar-links">
-        <Link to="/history">History</Link>
-        <a href="#logout">Log Out</a>
+    <header className="navbar">
+      <div className="navbar-inner">
+        <Link to="/" className="navbar-brand">
+          <span className="brand-mark"><ShieldIcon size={18} /></span>
+          HireGuard
+        </Link>
+        <nav className="navbar-links">
+          <NavLink to="/" end>Analyse</NavLink>
+          <NavLink to="/history">History</NavLink>
+          <a href="#logout" className="navbar-logout">Log Out</a>
+        </nav>
       </div>
-    </nav>
+    </header>
   );
 }
