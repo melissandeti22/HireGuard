@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.env
+backend/instance/
+
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+# ML artifacts (large binary files -- don't commit trained models to git)
+backend/app/ml/artifacts/*.joblib
+
+# Data (large scraped/raw files -- keep out of git, or use Git LFS)
+data-collection/data/raw/*.csv
+data-collection/data/processed/*.csv
+
+# Older local copy of data-collection (kept on disk only)
+hireguard_data_collection/
+
+# OS/editor
+.DS_Store
+.vscode/*
+!.vscode/tasks.json
+!.vscode/extensions.json
+*.log

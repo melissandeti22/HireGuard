@@ -1,0 +1,19 @@
+Flask>=3.0.0
+Flask-SQLAlchemy>=3.1.0
+Flask-Cors>=4.0.0
+psycopg[binary]>=3.1.0
+python-dotenv>=1.0.0
+
+# ML pipeline (Section 3.8 of the proposal)
+scikit-learn>=1.4.0
+shap>=0.45.0
+joblib>=1.3.0
+numpy>=1.26.0
+pandas>=2.1.0
+
+# NLP / stylometric features (Section 3.8.3)
+nltk>=3.8.1
+spacy>=3.7.0
+textstat>=0.7.3
+beautifulsoup4>=4.12.0
+lxml>=5.0.0

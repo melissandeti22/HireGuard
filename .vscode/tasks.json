@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "HireGuard: Setup",
+      "detail": "One-time install of backend + frontend dependencies and database",
+      "type": "shell",
+      "command": "powershell -ExecutionPolicy Bypass -File \"${workspaceFolder}\\setup.ps1\"",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "HireGuard: Backend",
+      "type": "shell",
+      "command": "\"${workspaceFolder}\\backend\\venv\\Scripts\\python.exe\" run.py",
+      "options": { "cwd": "${workspaceFolder}\\backend" },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "group": "hireguard" }
+    },
+    {
+      "label": "HireGuard: Frontend",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": { "cwd": "${workspaceFolder}\\frontend" },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "group": "hireguard" }
+    },
+    {
+      "label": "HireGuard: Start",
+      "detail": "Runs backend (:5000) and frontend (:5173) side by side",
+      "dependsOn": ["HireGuard: Backend", "HireGuard: Frontend"],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    }
+  ]
+}
