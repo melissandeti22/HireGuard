@@ -20,6 +20,9 @@ data-collection/data/processed/*.csv
 # Older local copy of data-collection (kept on disk only)
 hireguard_data_collection/
 
+# Claude Code project notes (kept local)
+CLAUDE.md
+
 # OS/editor
 .DS_Store
 .vscode/*
