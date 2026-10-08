@@ -120,7 +120,12 @@ def parse_job_detail(session: PoliteSession, url: str) -> dict | None:
     # in brightermonday_extract.py for why this beats CSS selectors here).
     fields = parse_brightermonday_text(full_text, title)
 
-    email_domain = extract_email_domain(resp.text)
+    # Only search the job's own text: the page template contains
+    # "anonymous@anonymous.com" (report-abuse form default) and BrighterMonday's
+    # support address, which would otherwise mark every posting the same.
+    email_domain = extract_email_domain(
+        fields["description"], ignore_domains=("brightermonday.co.ke", "anonymous.com")
+    )
     source_id = url.rstrip("/").split("/")[-1]
 
     record = {

@@ -9,8 +9,8 @@ from BrighterMonday Kenya and Fuzu Kenya.
 | Component | Status |
 |---|---|
 | EMSCAD download + standardization | **Done, tested.** 17,880 rows loaded, class split (17,014 legit / 866 fraudulent) matches the published dataset exactly. |
-| BrighterMonday scraper | Written, **not yet run against the live site** -- see note below. |
-| Fuzu scraper | Written, **not yet run against the live site** -- see note below. |
+| BrighterMonday scraper | **Working, run live (Oct 2026).** Contact-email detection now reads only the job text (the page template's `anonymous@anonymous.com` was previously tagged on every posting). |
+| Fuzu scraper | **Working, run live (Oct 2026).** Rewritten to discover jobs via Fuzu's job sitemaps -- see "Fuzu: how jobs are found" below. |
 | Manual annotation guide | Done -- see `labeling/annotation_guide.md`. |
 
 ## Important: run the scrapers from your own machine
@@ -40,6 +40,38 @@ That's a reasonable v1 -- your stylometric features (Section 3.2.2) mostly
 operate on the combined text anyway -- but if you want the fields split
 cleanly, inspect a live detail page and add the extra selectors.
 
+## Running the scrapers
+
+Both scrapers run from `scrapers/` and need only `requirements.txt`
+(the backend venv already has everything):
+
+```
+cd scrapers
+python brightermonday_scraper.py --max-pages 4 --categories "/jobs,/jobs/nairobi,/jobs/sales"
+python fuzu_scraper.py --max-jobs 1000             # newest first; --categories accounting-finance,sales to narrow
+```
+
+Output goes to `data/raw/brightermonday_raw.csv` and `data/raw/fuzu_raw.csv`
+(unified schema, `fraudulent` left blank for annotation). At the default 3s
+delay, budget roughly 50 minutes per 1,000 postings.
+
+## Fuzu: how jobs are found
+
+Fuzu's `/kenya/job?page=N` listing pages render job cards with JavaScript,
+so their static HTML only contains category/location filter links -- the
+original listing-page approach scraped filter menus instead of jobs. The
+scraper now reads the job-listings sitemap that Fuzu advertises in its
+robots.txt (`/kenya/sitemap-job-listings.xml.gz`, one sub-sitemap per
+category, ~7,400 unique Kenyan job URLs in Oct 2026) and fetches
+`/kenya/jobs/<slug>` detail pages newest-first.
+
+Detail pages use generated CSS class names that change between builds, so
+`common/fuzu_extract.py` slices the page text by its stable labels
+(`Location`, `Contract Type`, `Salary`, `Description`, `Tags`, `Posted:`).
+The sitemaps include **expired** postings; their text is still shown, and
+`posted_date` records when each was published. Salary and contract type are
+blank on most Fuzu postings.
+
 ## Structure
 
 ```
@@ -47,7 +79,9 @@ hireguard_data_collection/
 ├── common/
 │   ├── config.py         # unified schema, free-email list, request settings
 │   ├── http_client.py    # rate-limited session, robots.txt compliance, retries
-│   └── text_utils.py     # HTML cleaning, email/domain extraction, Cyrillic normalization
+│   ├── text_utils.py     # HTML cleaning, email/domain extraction, Cyrillic normalization
+│   ├── brightermonday_extract.py  # label-based field extraction for BrighterMonday pages
+│   └── fuzu_extract.py   # label-based field extraction for Fuzu pages
 ├── scrapers/
 │   ├── brightermonday_scraper.py
 │   └── fuzu_scraper.py

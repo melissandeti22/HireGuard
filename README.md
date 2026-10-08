@@ -22,7 +22,7 @@ PostgreSQL (configured via `backend/.env`) is the Data Tier.
 | Component | Status |
 |---|---|
 | Data collection (EMSCAD, BrighterMonday) | Working -- see `data-collection/README.md` |
-| Data collection (Fuzu) | Scraper written, not yet tested against the live site |
+| Data collection (Fuzu) | Working -- jobs discovered via Fuzu's job sitemap (see `data-collection/README.md`) |
 | Backend API (`/api/classify`, `/api/history`) | Scaffolded and tested end-to-end in **stub mode** (no trained model yet) |
 | Database schema | Defined (`backend/app/db/models.py`), not yet created in a real PostgreSQL instance |
 | Frontend (submission, results, history pages) | Scaffolded, builds cleanly, not yet connected to a running backend |
