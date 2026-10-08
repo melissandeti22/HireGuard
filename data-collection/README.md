@@ -88,7 +88,10 @@ hireguard_data_collection/
 ├── emscad/
 │   └── prepare_emscad.py # loads + standardizes the EMSCAD CSV (tested, working)
 ├── labeling/
-│   └── annotation_guide.md
+│   ├── annotation_guide.md
+│   └── prepare_annotation.py  # dedupes + shuffles scrapes into an annotation batch
+├── dataset/
+│   └── build_dataset.py  # EMSCAD + labelled scrapes -> hireguard_dataset.csv with group-aware train/test split
 └── data/
     ├── raw/               # emscad_raw.csv is here already; scraper output goes here too
     └── processed/         # emscad_processed.csv (standardized, ready to concatenate)

@@ -16,6 +16,8 @@ backend/app/ml/artifacts/*.joblib
 # Data (large scraped/raw files -- keep out of git, or use Git LFS)
 data-collection/data/raw/*.csv
 data-collection/data/processed/*.csv
+data-collection/data/raw/*.tsv
+data-collection/data/processed/*.tsv
 
 # Older local copy of data-collection (kept on disk only)
 hireguard_data_collection/

@@ -49,8 +49,7 @@ class SHAPExplainer:
             return self._stub_explanation(vector, result)
 
         X = self._vector_to_array(vector)
-        shap_values = self.explainer.shap_values(X)
-        contributions = shap_values[1][0] if isinstance(shap_values, list) else shap_values[0]
+        contributions = self._fraud_class_contributions(self.explainer.shap_values(X))
 
         ranked = sorted(
             zip(FEATURE_ORDER, contributions), key=lambda p: abs(p[1]), reverse=True
@@ -66,6 +65,19 @@ class SHAPExplainer:
         ]
         summary = self._build_summary(top_features, result.label)
         return ExplainabilityReport(top_features=top_features, plain_language_summary=summary)
+
+    @staticmethod
+    def _fraud_class_contributions(shap_values):
+        """Per-feature SHAP values for the fraudulent class (1) of the single row explained.
+
+        shap < 0.45 returns a list [class_0, class_1] of (rows, features) arrays;
+        shap >= 0.45 returns one (rows, features, classes) array for classifiers.
+        """
+        import numpy as np
+        if isinstance(shap_values, list):
+            return shap_values[1][0]
+        values = np.asarray(shap_values)
+        return values[0, :, 1] if values.ndim == 3 else values[0]
 
     def _stub_explanation(self, vector: FeatureVector, result) -> ExplainabilityReport:
         """Heuristic explanation used until a fitted SHAP explainer exists."""
