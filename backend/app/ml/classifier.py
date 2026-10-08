@@ -23,6 +23,8 @@ FEATURE_ORDER = [
     "ttr", "avg_sentence_length", "sentence_length_variance",
     "punctuation_density", "exclamation_density", "readability_score",
     "gunning_fog_index", "urgency_term_count", "free_email_flag",
+    "log_word_count", "caps_word_ratio", "money_mention_density",
+    "payment_or_id_request_count", "second_person_density", "messaging_app_mention",
 ]
 
 

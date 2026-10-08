@@ -27,6 +27,12 @@ FEATURE_DESCRIPTIONS = {
     "gunning_fog_index": "unusual text complexity",
     "urgency_term_count": "urgency / over-promising language",
     "free_email_flag": "use of a free email provider instead of a corporate domain",
+    "log_word_count": "unusually short or long posting",
+    "caps_word_ratio": "heavy use of capital letters",
+    "money_mention_density": "frequent mentions of money or pay",
+    "payment_or_id_request_count": "requests for payment, M-Pesa, ID or bank details",
+    "second_person_density": "heavy direct 'you' address to the reader",
+    "messaging_app_mention": "contact through WhatsApp or Telegram",
 }
 
 
